@@ -29,7 +29,7 @@ var SendMeeting = function () {
   <body>
     <bodyContent
       xsi:type="java:com.webex.service.binding.meeting.SetMeeting">
-      <meetingkey>621893047</meetingkey>
+      <meetingkey>${result.meeting_id}</meetingkey>
       <participants>
         <attendees>
           <attendee>
