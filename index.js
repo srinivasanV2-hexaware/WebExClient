@@ -111,5 +111,8 @@ var CreateMeeting = function () {
         });
     });
 };
+app.listen(58242, function (err) {
+    console.log(err);
+})
 
 
