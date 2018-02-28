@@ -8,7 +8,6 @@ var Promise = require('promise');
 app.get("/", function (req, res) {
     SendMeeting().then(function (result) {
         res.end("success");
-
     }).catch(function (errdata) {
         res.end(errdata);
         console.log(errdata)
@@ -16,10 +15,10 @@ app.get("/", function (req, res) {
 })
 
 var SendMeeting = function () {
-
-    return CreateMeeting().then(function (result) {
-        console.log(result)
-        let rawbody = `<serv:message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    return new Promise(function (resolve, reject) {
+        return CreateMeeting().then(function (result) {
+            console.log(result)
+            let rawbody = `<serv:message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
     <securityContext>
       <webExID>NuanceWebex</webExID>
@@ -49,21 +48,21 @@ var SendMeeting = function () {
     </bodyContent>
   </body>
 </serv:message>`;
-        request.post({
-            headers: { 'content-type': 'application/xml' },
-            url: 'https://apidemoeu.webex.com/WBXService/XMLService',
-            body: rawbody
-        }, function (error, response, body) {
-            const ast = XmlReader.parseSync(body);
-            const result = xmlQuery(ast).find('serv:result').text();
-            console.log(result);
-            console.log(body);
-        });
+            request.post({
+                headers: { 'content-type': 'application/xml' },
+                url: 'https://apidemoeu.webex.com/WBXService/XMLService',
+                body: rawbody
+            }, function (error, response, body) {
+                const ast = XmlReader.parseSync(body);
+                const result = xmlQuery(ast).find('serv:result').text();
+                console.log(body);
+                resolve(result);
+            });
 
-    }).catch(function (errdata) {
-        console.log(errdata)
+        }).catch(function (errdata) {
+            reject(errdata)
+        })
     })
-
 
 }
 var CreateMeeting = function () {
