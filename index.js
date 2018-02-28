@@ -1,8 +1,20 @@
 var request = require('request');
+var express = require('express');
+var app = express();
 const xmlQuery = require('xml-query');
 const XmlReader = require('xml-reader');
-function SendMeeting(){
-  let rawbody=`<serv:message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+var Promise = require('promise');
+
+app.get("/", function (req, res) {
+
+    res.send();
+})
+
+var SendMeeting = function () {
+
+    return CreateMeeting().then(function (result) {
+        console.log(result)
+        let rawbody = `<serv:message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
     <securityContext>
       <webExID>NuanceWebex</webExID>
@@ -18,7 +30,7 @@ function SendMeeting(){
         <attendees>
           <attendee>
             <person>
-              <email>38238.hexaware@gmail.com</email>
+              <email>SrinivasanV3@hexaware.com</email>
             </person>
           </attendee>
         </attendees>
@@ -32,20 +44,27 @@ function SendMeeting(){
     </bodyContent>
   </body>
 </serv:message>`;
-request.post({
-  headers: { 'content-type': 'application/xml' },
-  url: 'https://apidemoeu.webex.com/WBXService/XMLService',
-  body: rawbody
-}, function (error, response, body) {
-  const ast = XmlReader.parseSync(body);
-  const result=xmlQuery(ast).find('serv:result').text();
-  console.log(result); 
-  console.log(body); 
+        request.post({
+            headers: { 'content-type': 'application/xml' },
+            url: 'https://apidemoeu.webex.com/WBXService/XMLService',
+            body: rawbody
+        }, function (error, response, body) {
+            const ast = XmlReader.parseSync(body);
+            const result = xmlQuery(ast).find('serv:result').text();
+            console.log(result);
+            console.log(body);
+        });
 
-});
+    }).catch(function (errdata) {
+        console.log(errdata)
+    })
+
+
 }
-function CreateMeeting() {
-  let rawbody = `<?xml version="1.0" encoding="UTF-8"?>
+var CreateMeeting = function () {
+    return new Promise(function (resolve, reject) {
+        var r = {};
+        let rawbody = `<?xml version="1.0" encoding="UTF-8"?>
 <serv:message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <header>
         <securityContext>
@@ -65,19 +84,26 @@ function CreateMeeting() {
         </bodyContent>
     </body>
 </serv:message>`;
-  request.post({
-    headers: { 'content-type': 'application/xml' },
-    url: 'https://apidemoeu.webex.com/WBXService/XMLService',
-    body: rawbody
-  }, function (error, response, body) {
-    const ast = XmlReader.parseSync(body);
-    const meeting_id=xmlQuery(ast).find('meet:meetingkey').text();
-    const server_host=xmlQuery(ast).find('serv:host').text();
-    const server_attd=xmlQuery(ast).find('serv:attendee').text();
-    console.log(meeting_id); 
-    console.log(server_host); 
-    console.log(server_attd); 
+        request.post({
+            headers: { 'content-type': 'application/xml' },
+            url: 'https://apidemoeu.webex.com/WBXService/XMLService',
+            body: rawbody
+        }, function (error, response, body) {
+            try {
+                const ast = XmlReader.parseSync(body);
+                const meeting_id = xmlQuery(ast).find('meet:meetingkey').text();
+                const server_host = xmlQuery(ast).find('serv:host').text();
+                const server_attd = xmlQuery(ast).find('serv:attendee').text();
+                r.meeting_id = meeting_id;
+                r.server_host = server_host;
+                r.server_attd = server_attd;
+                resolve(r);
+            }
+            catch (e) {
+                reject();
+            }
 
-  });
-}
+        });
+    }
+    }
 SendMeeting();
