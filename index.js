@@ -104,6 +104,7 @@ var CreateMeeting = function () {
             }
 
         });
-    }
-    }
-SendMeeting();
+    });
+};
+    
+
