@@ -6,8 +6,13 @@ const XmlReader = require('xml-reader');
 var Promise = require('promise');
 
 app.get("/", function (req, res) {
+    SendMeeting().then(function (result) {
+        res.end("success");
 
-    res.send();
+    }).catch(function (errdata) {
+        res.end(errdata);
+        console.log(errdata)
+    })
 })
 
 var SendMeeting = function () {
@@ -100,11 +105,11 @@ var CreateMeeting = function () {
                 resolve(r);
             }
             catch (e) {
-                reject();
+                reject(e);
             }
 
         });
     });
 };
-    
+
 
