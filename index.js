@@ -110,7 +110,7 @@ var CreateMeeting = function () {
         });
     });
 };
-app.listen(58242, function (err) {
+app.listen(process.env.PORT, function (err) {
     console.log(err);
 })
 
