@@ -1,4 +1,7 @@
-
+var request = require('request');
+const xmlQuery = require('xml-query');
+const XmlReader = require('xml-reader');
+var Promise = require('promise');
 var SendMeeting = function () {
     return new Promise(function (resolve, reject) {
         return CreateMeeting().then(function (result) {
