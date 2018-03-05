@@ -1,6 +1,5 @@
 var express = require('express');
-var request = require('request');
-var Promise = require('promise');
+
 var app = express();
 var createMeeting=require('./createmeeting');
 
