@@ -54,7 +54,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
             });
 
         }).catch(function (errdata) {
-            session.send(errdata);
+         
             reject(errdata)
         })
     })
