@@ -2,29 +2,7 @@ var request = require('request');
 const xmlQuery = require('xml-query');
 const XmlReader = require('xml-reader');
 var Promise = require('promise');
-var SendMeeting = function () {
-    return new Promise(function (resolve, reject) {
-        return CreateMeeting().then(function (result) {
-            console.log(result)
-            let rawbody = `<serv:message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <header>
-    <securityContext>
-      <webExID>NuanceWebex</webExID>
-      <password>#23_Srini</password>
-      <siteName>apidemoeu</siteName>
-    </securityContext>
-  </header>
-  <body>
-    <bodyContent
-      xsi:type="java:com.webex.service.binding.meeting.SetMeeting">
-      <meetingkey>${result.meeting_id}</meetingkey>
-      <participants>
-        <attendees>
-          <attendee>
-            <person>
-              <email>SrinivasanV3@hexaware.com</email>
-            </person>
-          </attendee>
+         ${attendeess}
         </attendees>
       </participants>
       <attendeeOptions>
@@ -44,10 +22,12 @@ var SendMeeting = function () {
                 const ast = XmlReader.parseSync(body);
                 const result = xmlQuery(ast).find('serv:result').text();
                 console.log(body);
+                session.send(result);
                 resolve(result);
             });
 
         }).catch(function (errdata) {
+            session.send(errdata);
             reject(errdata)
         })
     })
@@ -68,7 +48,7 @@ var CreateMeeting = function () {
     <body>
         <bodyContent xsi:type="java:com.webex.service.binding.meeting.CreateMeeting">
             <metaData>
-                <confName>Sample Meeting1</confName>
+                <confName>${subjectMeeting + '-' + meetingPlace}</confName>
             </metaData>
             <schedule>
                 <startDate/>
@@ -97,5 +77,6 @@ var CreateMeeting = function () {
 
         });
     });
-};
-module.exports.sendMeeting=SendMeeting;
+}
+
+module.exports.SendMeeting = SendMeeting;
