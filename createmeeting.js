@@ -11,6 +11,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
             </person>
           </attendee>`;
             });
+      console.log(attendeess);
     return new Promise(function (resolve, reject) {
         return CreateMeeting().then(function (result) {
             var nowDate = startdate.split(' ');
@@ -98,9 +99,11 @@ var CreateMeeting = function () {
                 r.server_host = server_host;
                 r.server_attd = server_attd;
                 resolve(r);
+                    console.log(response)  
             }
             catch (e) {
                 reject(e);
+                console.log(e)  
             }
 
         });
