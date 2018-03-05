@@ -2,6 +2,34 @@ var request = require('request');
 const xmlQuery = require('xml-query');
 const XmlReader = require('xml-reader');
 var Promise = require('promise');
+var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaillist, startdate, enddate,session) {
+    return new Promise(function (resolve, reject) {
+        return CreateMeeting().then(function (result) {
+            var nowDate = startdate.split(' ');
+            var attendeess;
+            session.send(JSON.stringify(emaillist));
+            emaillist.forEach(function (emailids) {
+                attendeess += `<attendee>
+            <person>
+              <email>${emailids}</email>
+            </person>
+          </attendee>`;
+            });
+                 
+  let rawbody = `<serv:message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <header>
+    <securityContext>
+      <webExID>NuanceWebex</webExID>
+      <password>#23_Srini</password>
+      <siteName>apidemoeu</siteName>
+    </securityContext>
+  </header>
+  <body>
+    <bodyContent
+      xsi:type="java:com.webex.service.binding.meeting.SetMeeting">
+      <meetingkey>${result.meeting_id}</meetingkey>
+      <participants>
+        <attendees>
          ${attendeess}
         </attendees>
       </participants>
