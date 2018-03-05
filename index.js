@@ -4,7 +4,7 @@ var app = express();
 var createMeeting=require('./createmeeting');
 
 app.get("/", function (req, res) {
-    createMeeting.SendMeeting().then(function (result) {
+    createMeeting.sendMeeting().then(function (result) {
         res.end("success");
     }).catch(function (errdata) {
         res.end(errdata);
