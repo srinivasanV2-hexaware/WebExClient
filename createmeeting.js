@@ -7,8 +7,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
         return CreateMeeting().then(function (result) {
             var nowDate = startdate.split(' ');
             var attendeess;
-            session.send(JSON.stringify(emaillist));
-            emaillist.forEach(function (emailids) {
+                emaillist.forEach(function (emailids) {
                 attendeess += `<attendee>
             <person>
               <email>${emailids}</email>
@@ -50,7 +49,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
                 const ast = XmlReader.parseSync(body);
                 const result = xmlQuery(ast).find('serv:result').text();
                 console.log(body);
-                session.send(result);
+       
                 resolve(result);
             });
 
