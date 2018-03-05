@@ -98,3 +98,4 @@ var CreateMeeting = function () {
         });
     });
 };
+module.exports.sendMeeting=sendMeeting;
