@@ -13,7 +13,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
             });
       console.log(attendeess);
     return new Promise(function (resolve, reject) {
-        return CreateMeeting().then(function (result) {
+        CreateMeeting().then(function (result) {
               console.log(result);
             var nowDate = startdate.split(' ');
           
