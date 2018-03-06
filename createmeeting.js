@@ -13,7 +13,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
             });
       console.log(attendeess);
     return new Promise(function (resolve, reject) {
-        CreateMeeting().then(function (result) {
+        return CreateMeeting(subjectMeeting, meetingPlace).then(function (result) {
               console.log(result);
             var nowDate = startdate.split(' ');
           
@@ -63,7 +63,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
     })
 
 }
-var CreateMeeting = function () {
+var CreateMeeting = function (subjectMeeting, meetingPlace) {
     return new Promise(function (resolve, reject) {
         var r = {};
         let rawbody = `<?xml version="1.0" encoding="UTF-8"?>
@@ -78,7 +78,7 @@ var CreateMeeting = function () {
     <body>
         <bodyContent xsi:type="java:com.webex.service.binding.meeting.CreateMeeting">
             <metaData>
-                <confName>Sample1</confName>
+                <confName>${subjectMeeting + '-' + meetingPlace}</confName>
             </metaData>
             <schedule>
                 <startDate/>
