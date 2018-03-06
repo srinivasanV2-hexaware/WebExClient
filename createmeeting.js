@@ -13,7 +13,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
             });
       console.log(attendeess);
     return new Promise(function (resolve, reject) {
-        return CreateMeeting(subjectMeeting, meetingPlace).then(function (result) {
+        return CreateMeeting(subjectMeeting, meetingPlace,startdate).then(function (result) {
               console.log(result);
             var nowDate = startdate.split(' ');
           
@@ -63,7 +63,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
     })
 
 }
-var CreateMeeting = function (subjectMeeting, meetingPlace) {
+var CreateMeeting = function (subjectMeeting, meetingPlace,startdate) {
     return new Promise(function (resolve, reject) {
         var r = {};
         let rawbody = `<?xml version="1.0" encoding="UTF-8"?>
@@ -81,7 +81,7 @@ var CreateMeeting = function (subjectMeeting, meetingPlace) {
                 <confName>${subjectMeeting + '-' + meetingPlace}</confName>
             </metaData>
             <schedule>
-                <startDate/>
+                <startDate>${startdate}</startDate>
             </schedule>
         </bodyContent>
     </body>
