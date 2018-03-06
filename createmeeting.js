@@ -46,6 +46,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
     </bodyContent>
   </body>
 </serv:message>`;
+         console.log(rawbody);
             request.post({
                 headers: { 'content-type': 'application/xml' },
                 url: 'https://apidemoeu.webex.com/WBXService/XMLService',
