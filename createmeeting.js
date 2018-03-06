@@ -5,11 +5,13 @@ var Promise = require('promise');
 var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaillist, startdate, enddate,session) {
       var attendeess;
                 emaillist.forEach(function (emailids) {
+                if(emailids){
                 attendeess += `<attendee>
             <person>
               <email>${emailids}</email>
             </person>
           </attendee>`;
+                }
             });
       console.log(attendeess);
     return new Promise(function (resolve, reject) {
