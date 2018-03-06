@@ -3,7 +3,7 @@ const xmlQuery = require('xml-query');
 const XmlReader = require('xml-reader');
 var Promise = require('promise');
 var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaillist, startdate, enddate,session) {
-      var attendeess;
+      var attendeess='';
                 emaillist.forEach(function (emailids) {
                 if(emailids){
                 attendeess += `<attendee>
