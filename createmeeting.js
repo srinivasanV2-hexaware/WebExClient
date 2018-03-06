@@ -110,4 +110,4 @@ var CreateMeeting = function () {
     });
 }
 
-module.exports.SendMeeting = SendMeeting;
+module.exports.sendMeeting = SendMeeting;
