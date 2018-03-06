@@ -108,12 +108,18 @@ var CreateMeeting = function (subjectMeeting, meetingPlace,startdate) {
                 r.meeting_id = meeting_id;
                 r.server_host = server_host;
                 r.server_attd = server_attd;
+                console.log('----------------------------------Create Meeting resonse ---------------------------')
+                console.log(body)   
+                console.log('-------------------------------------------------------------------------------------');
                 resolve(r);
-                  //  console.log(response)  
+                  
             }
             catch (e) {
+                console.log('----------------------------------Create Meeting error ---------------------------')
+                console.log(e)  
+                console.log('----------------------------------------------------------------------------------');
                 reject(e);
-               // console.log(e)  
+               
             }
 
         });
