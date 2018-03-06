@@ -14,6 +14,7 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
       console.log(attendeess);
     return new Promise(function (resolve, reject) {
         return CreateMeeting().then(function (result) {
+              console.log(result);
             var nowDate = startdate.split(' ');
           
                  
@@ -91,6 +92,7 @@ var CreateMeeting = function () {
             body: rawbody
         }, function (error, response, body) {
             try {
+                  console.log(response);
                 const ast = XmlReader.parseSync(body);
                 const meeting_id = xmlQuery(ast).find('meet:meetingkey').text();
                 const server_host = xmlQuery(ast).find('serv:host').text();
