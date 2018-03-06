@@ -78,7 +78,7 @@ var CreateMeeting = function () {
     <body>
         <bodyContent xsi:type="java:com.webex.service.binding.meeting.CreateMeeting">
             <metaData>
-                <confName>${subjectMeeting + '-' + meetingPlace}</confName>
+                <confName>Sample1</confName>
             </metaData>
             <schedule>
                 <startDate/>
