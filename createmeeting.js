@@ -46,7 +46,9 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
     </bodyContent>
   </body>
 </serv:message>`;
-         console.log(rawbody);
+      console.log('---------------------------Raw Body ----------------------------');
+      console.log(rawbody);
+      console.log('-----------------------------------------------------------------');
             request.post({
                 headers: { 'content-type': 'application/xml' },
                 url: 'https://apidemoeu.webex.com/WBXService/XMLService',
@@ -54,13 +56,16 @@ var SendMeeting = function (subjectMeeting, meetingPlace, dateScheduling, emaill
             }, function (error, response, body) {
                 const ast = XmlReader.parseSync(body);
                 const result = xmlQuery(ast).find('serv:result').text();
-                console.log(body);
-       
+                console.log('---------------------------Meeting Body ----------------------------');
+                console.log(JSON.stringify(body));
+                console.log('-----------------------------------------------------------------');
                 resolve(result);
             });
 
         }).catch(function (errdata) {
-         
+             console.log('---------------------------Meeting Error ----------------------------');
+             console.log(JSON.stringify(errdata))
+              console.log('-----------------------------------------------------------------');
             reject(errdata)
         })
     })
@@ -95,7 +100,7 @@ var CreateMeeting = function (subjectMeeting, meetingPlace,startdate) {
             body: rawbody
         }, function (error, response, body) {
             try {
-                  console.log(response);
+                 // console.log(response);
                 const ast = XmlReader.parseSync(body);
                 const meeting_id = xmlQuery(ast).find('meet:meetingkey').text();
                 const server_host = xmlQuery(ast).find('serv:host').text();
@@ -104,11 +109,11 @@ var CreateMeeting = function (subjectMeeting, meetingPlace,startdate) {
                 r.server_host = server_host;
                 r.server_attd = server_attd;
                 resolve(r);
-                    console.log(response)  
+                  //  console.log(response)  
             }
             catch (e) {
                 reject(e);
-                console.log(e)  
+               // console.log(e)  
             }
 
         });
